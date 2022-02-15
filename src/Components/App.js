@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
@@ -8,13 +8,15 @@ function App() {
   const [switcher, setSwitcher] = useState(true);
   const [user, setUser] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
-  let detailsAreAvailable = true;
-  const users = [
+  const [users, setUsers] = useState([
     { username: "valik", password: "123" },
     { username: "nas", password: "1111" },
     { username: "soso", password: "1q2w" },
-  ];
-  function addUser(data) {
+  ]);
+  let detailsAreAvailable = true;
+
+  useEffect(() => console.log(users), [users]);
+  const addUser = (data) => {
     for (let i = 0; i < users.length; i++) {
       if (data.username === users[i].username) {
         setError("Username is not available");
@@ -23,20 +25,18 @@ function App() {
       }
     }
     if (detailsAreAvailable) {
-      users.push(data);
+      setUsers([...users, data]);
       console.log("added");
     }
-  }
-  function errorHandler(err) {
-    setError(err);
-  }
-  function modalHandler() {
+  };
+  const errorHandler = (err) => setError(err);
+
+  const modalHandler = () => {
     setModal(!modal);
     setSwitcher(true);
-  }
-  function toggleSwitcher() {
-    setSwitcher(!switcher);
-  }
+  };
+  const toggleSwitcher = () => setSwitcher(!switcher);
+
   const Login = (details) => {
     users.map((item) => {
       if (
