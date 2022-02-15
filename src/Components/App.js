@@ -14,26 +14,21 @@ function App() {
     { username: "nas", password: "1111" },
     { username: "soso", password: "1q2w" },
   ]);
-  let detailsAreAvailable = true;
 
   const addUser = (data) => {
-    for (let i = 0; i < users.length; i++) {
-      if (data.username === users[i].username) {
-        errorHandler("Username is not available");
-        console.log(error);
-
-        detailsAreAvailable = false;
-        break;
-      }
-    }
-    if (detailsAreAvailable) {
+    let detailsAreAvailable = users.some(
+      ({ username }) => username === data.username
+    );
+    if (!detailsAreAvailable) {
       setUsers([...users, data]);
       setConfirm("added");
       console.log("added");
+    } else {
+      errorHandler("Username is not available");
     }
   };
   const errorHandler = (err) => setError(err);
-  const modalHandler = () => {
+  const isModalShow = () => {
     setModal(!modal);
     setSwitcher(true);
   };
@@ -74,27 +69,29 @@ function App() {
         ) : (
           <>
             <div className="navbar">
-              <button onClick={modalHandler} className="btn">
+              <button onClick={isModalShow} className="btn">
                 Log in
               </button>
             </div>
 
-            <div className={`modal ${modal ? "active" : ""}`}>
-              <LogIn
-                error={error}
-                Login={Login}
-                state={switcher}
-                func={[modalHandler, toggleSwitcher]}
-              />
-              <SignUp
-                confirm={confirm}
-                error={error}
-                add={addUser}
-                setError={errorHandler}
-                state={switcher}
-                func={[modalHandler, toggleSwitcher]}
-              />
-            </div>
+            {modal && (
+              <div className="modal active">
+                <LogIn
+                  error={error}
+                  Login={Login}
+                  state={switcher}
+                  func={[isModalShow, toggleSwitcher]}
+                />
+                <SignUp
+                  confirm={confirm}
+                  error={error}
+                  add={addUser}
+                  setError={errorHandler}
+                  state={switcher}
+                  func={[isModalShow, toggleSwitcher]}
+                />
+              </div>
+            )}
           </>
         )}
       </div>
