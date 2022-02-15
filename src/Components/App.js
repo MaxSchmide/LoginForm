@@ -8,6 +8,7 @@ function App() {
   const [switcher, setSwitcher] = useState(true);
   const [user, setUser] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [users, setUsers] = useState([
     { username: "valik", password: "123" },
     { username: "nas", password: "1111" },
@@ -19,23 +20,28 @@ function App() {
   const addUser = (data) => {
     for (let i = 0; i < users.length; i++) {
       if (data.username === users[i].username) {
-        setError("Username is not available");
+        errorHandler("Username is not available");
+        console.log(error);
+
         detailsAreAvailable = false;
         break;
       }
     }
     if (detailsAreAvailable) {
       setUsers([...users, data]);
+      setConfirm("added");
       console.log("added");
     }
   };
   const errorHandler = (err) => setError(err);
-
   const modalHandler = () => {
     setModal(!modal);
     setSwitcher(true);
   };
-  const toggleSwitcher = () => setSwitcher(!switcher);
+  const toggleSwitcher = () => {
+    setSwitcher(!switcher);
+    setError("");
+  };
 
   const Login = (details) => {
     users.map((item) => {
@@ -82,6 +88,7 @@ function App() {
                 func={[modalHandler, toggleSwitcher]}
               />
               <SignUp
+                confirm={confirm}
                 error={error}
                 add={addUser}
                 setError={errorHandler}

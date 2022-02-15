@@ -9,7 +9,10 @@ export default (props) => {
     e.preventDefault();
     if (data.username !== "" && data.email !== "" && data.password !== "") {
       props.add(data);
-      props.setError("");
+
+      if (props.error !== "") {
+        props.setError("");
+      }
       setData({ username: "", email: "", password: "" });
     } else {
       props.setError("Fill empty fields");
@@ -62,6 +65,12 @@ export default (props) => {
         />
         <button type="submit">Sign up</button>
         {props.error !== "" ? <div className="error">{props.error}</div> : ""}
+        {props.confirm !== "" ? (
+          <div className="confirm">{props.confirm}</div>
+        ) : (
+          ""
+        )}
+
         <div className="container">
           <button onClick={props.func[0]} type="button" className="cancelbtn">
             Cancel

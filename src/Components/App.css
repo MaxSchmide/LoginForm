@@ -13,6 +13,13 @@
   background-color: #d2d8d8;
   color: #f44336;
 }
+.confirm {
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
+  background-color: #d2d8d8;
+  color: #36f446;
+}
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
