@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
@@ -16,7 +16,6 @@ function App() {
   ]);
   let detailsAreAvailable = true;
 
-  useEffect(() => console.log(users), [users]);
   const addUser = (data) => {
     for (let i = 0; i < users.length; i++) {
       if (data.username === users[i].username) {
