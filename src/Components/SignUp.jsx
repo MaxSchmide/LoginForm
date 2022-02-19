@@ -1,69 +1,73 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-
+import React from "react";
 import { useState } from "react";
+export default function SignUp(props) {
+  const [details, setDetails] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
 
-/* eslint-disable import/no-anonymous-default-export */
-export default (props) => {
-  const [data, setData] = useState({ username: "", email: "", password: "" });
   const submitHandler = (e) => {
     e.preventDefault();
-    if (data.username !== "" && data.email !== "" && data.password !== "") {
-      props.add(data);
-
-      if (props.error !== "") {
-        props.setError("");
-      }
-      setData({ username: "", email: "", password: "" });
+    if (
+      details.username !== "" &&
+      details.email !== "" &&
+      details.password !== ""
+    ) {
+      props.add(details);
+      setDetails({
+        username: "",
+        password: "",
+        email: "",
+      });
     } else {
-      props.setError("Fill empty fields");
+      props.err("Fill empty fields");
     }
   };
   return (
     <>
-      <form
-        onSubmit={submitHandler}
-        className={`rg-content ${props.state ? "" : "selected"}`}
-      >
+      <form onSubmit={submitHandler} className="sign-up-form ">
         <div className="switcher">
           <li>
-            <a onClick={props.func[1]} href="#">
-              Log in
+            <a onClick={props.switch} href="#">
+              Sign In
             </a>
           </li>
           <li>
             <a className="selected" href="#">
-              Register
+              Sign Up
             </a>
           </li>
         </div>
-        <label htmlFor="uname">
-          <b>Username</b>
-        </label>
+        <label>Username</label>
         <input
-          value={data.username}
-          onChange={(e) => setData({ ...data, username: e.target.value })}
+          value={details.username}
+          onChange={(e) => {
+            setDetails({ ...details, username: e.target.value });
+          }}
           type="text"
           placeholder="Enter username"
         />
-        <label htmlFor="email">
-          <b>Email</b>
-        </label>
+        <label>E-mail</label>
         <input
-          value={data.email}
-          onChange={(e) => setData({ ...data, email: e.target.value })}
+          value={details.email}
+          onChange={(e) => {
+            setDetails({ ...details, email: e.target.value });
+          }}
           type="email"
-          placeholder="Enter email"
+          placeholder="Enter E-mail"
         />
-        <label htmlFor="password">
-          <b>Password</b>
-        </label>
+        <label>Password</label>
         <input
-          value={data.password}
-          onChange={(e) => setData({ ...data, password: e.target.value })}
+          onChange={(e) => {
+            setDetails({ ...details, password: e.target.value });
+          }}
           type="password"
           placeholder="Enter password"
+          value={details.password}
         />
-        <button type="submit">Sign up</button>
+        <button type="submit"> Submit </button>
         {props.error !== "" ? <div className="error">{props.error}</div> : ""}
         {props.confirm !== "" ? (
           <div className="confirm">{props.confirm}</div>
@@ -71,12 +75,10 @@ export default (props) => {
           ""
         )}
 
-        <div className="container">
-          <button onClick={props.func[0]} type="button" className="cancelbtn">
-            Cancel
-          </button>
-        </div>
+        <button onClick={props.close} className="cancel">
+          Cancel
+        </button>
       </form>
     </>
   );
-};
+}
