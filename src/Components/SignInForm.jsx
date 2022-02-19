@@ -10,8 +10,8 @@ export default function SignInForm(props) {
   const [switcher, setSwitcher] = useState(true);
   const [confrim, setconfrim] = useState("");
   const [usersDataBase, setUsersDataBase] = useState([
-    { username: "schmide", password: "123" },
-    { username: "valik", password: "111" },
+    { username: "schmide", email: "yamaks97@ukr.net", password: "123" },
+    { username: "valik", password: "111", email: "soso@ukr.net" },
   ]);
 
   const isModalShow = () => {
@@ -42,39 +42,43 @@ export default function SignInForm(props) {
   const addUserToBase = (data) => {
     let usernameIsAvailable;
     let emailIsAvailable;
-    if (!/^[a-zA-Z0-9]+$/.test(data.username)) {
+
+    if (!/^[a-zA-Z0-9@]+.+$/.test(data.email)) {
+      emailIsAvailable = true;
+      setError("Not correct E-mail");
+    } else if (!/^[a-zA-Z0-9]+$/.test(data.username)) {
       if (!/^[а-яА-Я]+$/.test(data.username)) {
         usernameIsAvailable = true;
         setError("Username can't contain symbols");
       } else {
         usernameIsAvailable = true;
-        setError("Write in English");
+        setError("Write username in English");
       }
-    } else {
-      usernameIsAvailable = usersDataBase.some(
-        ({ username }) => username === data.username
-      );
-      setError("Username is not available");
-    }
-    if (!/^[a-zA-Z0-9-@]+.+$/.test(data.email)) {
-      emailIsAvailable = true;
-      setError("Not correct E-mail");
     } else {
       emailIsAvailable = usersDataBase.some(
         ({ email }) => email === data.email
       );
-      setError("E-mail alreay used");
+      usernameIsAvailable = usersDataBase.some(
+        ({ username }) => username === data.username
+      );
     }
 
     if (!usernameIsAvailable && !emailIsAvailable) {
       setUsersDataBase([...usersDataBase, data]);
       setError("");
       setconfrim("Added");
-      // } else if (usernameIsAvailable) {
-      //   setError("Username is not available");
-      // } else if (emailIsAvailable) {
-      //   setError("E-mail alreay used");
-      // }
+    } else if (
+      (usernameIsAvailable = usersDataBase.some(
+        ({ username }) => username === data.username
+      ))
+    ) {
+      setError("Username is not available");
+    } else if (
+      (emailIsAvailable = usersDataBase.some(
+        ({ email }) => email === data.email
+      ))
+    ) {
+      setError("E-mail alreay used");
     }
   };
 
