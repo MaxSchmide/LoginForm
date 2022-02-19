@@ -1,5 +1,5 @@
 import React from "react";
-
+import img from "../Images/1.jpg";
 export default function Welcome(props) {
   const signOut = () => {
     props.auth({ username: "", password: "" });
@@ -7,7 +7,10 @@ export default function Welcome(props) {
   return (
     <div>
       <h1>Welcome {props.user.username}!</h1>
-      <button onClick={signOut}>Sign out</button>
+      <button className="btn" onClick={signOut}>
+        Sign out
+      </button>
+      <img src={img} alt="1" />
     </div>
   );
 }

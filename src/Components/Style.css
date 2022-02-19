@@ -2,6 +2,15 @@
   margin: 0;
   padding: 0;
 }
+img {
+  position: relative;
+  display: flex;
+  top: 5%;
+  left: 25%;
+  width: 50%;
+  height: 100%;
+}
+
 nav {
   background-color: rgba(20, 17, 17, 0.959);
   height: 3rem;
