@@ -2,16 +2,19 @@ import SignInFrom from "./Components/SignInForm";
 import { useState } from "react";
 import Welcome from "./Components/Welcome";
 function App() {
-  const [user, setUser] = useState({ username: "", password: "" });
-  const currentuser = (userData) => {
-    setUser(userData);
+  const [currentUser, setCurrentUser] = useState({
+    username: "",
+    password: "",
+  });
+  const handleCurrentUser = (userData) => {
+    setCurrentUser(userData);
   };
   return (
     <>
-      {user.username.length ? (
-        <Welcome auth={currentuser} user={user} />
+      {currentUser.username.length ? (
+        <Welcome auth={handleCurrentUser} user={currentUser} />
       ) : (
-        <SignInFrom auth={currentuser} />
+        <SignInFrom auth={handleCurrentUser} />
       )}
     </>
   );

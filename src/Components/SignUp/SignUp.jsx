@@ -8,6 +8,10 @@ export default function SignUp(props) {
     email: "",
   });
 
+  const handlerDetails = (e) => {
+    setDetails({ ...details, [e.target.name]: e.target.value });
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (
@@ -42,27 +46,24 @@ export default function SignUp(props) {
         </div>
         <label>Username</label>
         <input
+          name={details.username}
           value={details.username}
-          onChange={(e) => {
-            setDetails({ ...details, username: e.target.value });
-          }}
+          onChange={handlerDetails}
           type="text"
           placeholder="Enter username"
         />
         <label>E-mail</label>
         <input
+          name={details.email}
           value={details.email}
-          onChange={(e) => {
-            setDetails({ ...details, email: e.target.value });
-          }}
+          onChange={handlerDetails}
           type="email"
           placeholder="Enter E-mail"
         />
         <label>Password</label>
         <input
-          onChange={(e) => {
-            setDetails({ ...details, password: e.target.value });
-          }}
+          name={details.password}
+          onChange={handlerDetails}
           type="password"
           placeholder="Enter password"
           value={details.password}
