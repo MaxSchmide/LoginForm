@@ -46,7 +46,7 @@ export default function SignUp(props) {
         </div>
         <label>Username</label>
         <input
-          name={details.username}
+          name="username"
           value={details.username}
           onChange={handlerDetails}
           type="text"
@@ -54,7 +54,7 @@ export default function SignUp(props) {
         />
         <label>E-mail</label>
         <input
-          name={details.email}
+          name="email"
           value={details.email}
           onChange={handlerDetails}
           type="email"
@@ -62,19 +62,15 @@ export default function SignUp(props) {
         />
         <label>Password</label>
         <input
-          name={details.password}
+          name="password"
           onChange={handlerDetails}
           type="password"
           placeholder="Enter password"
           value={details.password}
         />
         <button type="submit"> Submit </button>
-        {props.error !== "" ? <div className="error">{props.error}</div> : ""}
-        {props.confirm !== "" ? (
-          <div className="confirm">{props.confirm}</div>
-        ) : (
-          ""
-        )}
+        {props.error !== "" && <div className="error">{props.error}</div>}
+        {props.confirm !== "" && <div className="confirm">{props.confirm}</div>}
 
         <button onClick={props.close} className="cancel">
           Cancel

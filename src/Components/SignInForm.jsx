@@ -9,18 +9,15 @@ export default function SignInForm(props) {
   const [error, setError] = useState("");
   const [switcher, setSwitcher] = useState(true);
   const [confrim, setconfrim] = useState("");
-  const [usersDataBase, setUsersDataBase] = useState([
-    { username: "schmide", email: "yamaks97@ukr.net", password: "123" },
-    { username: "valik", password: "111", email: "soso@ukr.net" },
-  ]);
-  const usersData = require("./file.json");
-  const usersDataFile = usersData.users;
 
-  const isModalShow = () => {
+  const usersData = require("./file.json");
+  const usersDataBase = usersData.users;
+
+  const handlerModalWindow = () => {
     setModal(!modal);
     setSwitcher(true);
   };
-  const signSwitcher = () => {
+  const toggleSignForm = () => {
     setSwitcher(!switcher);
     setError("");
   };
@@ -48,7 +45,7 @@ export default function SignInForm(props) {
     let confirmMessage = "";
     if (!/^[a-zA-Z0-9@]+.+$/.test(data.email)) {
       emailIsAvailable = true;
-      setError("Not correct E-mail");
+      errorMessage = "Not correct E-mail";
     } else if (!/^[a-zA-Z0-9]+$/.test(data.username)) {
       if (!/^[а-яА-Я]+$/.test(data.username)) {
         usernameIsAvailable = true;
@@ -67,7 +64,7 @@ export default function SignInForm(props) {
     }
 
     if (!usernameIsAvailable && !emailIsAvailable) {
-      setUsersDataBase([...usersDataBase, data]);
+      usersDataBase.push(data);
       errorMessage = "";
       confirmMessage = "Added";
     } else if (
@@ -90,7 +87,7 @@ export default function SignInForm(props) {
   return (
     <>
       <nav>
-        <button onClick={isModalShow} className="btn">
+        <button onClick={handlerModalWindow} className="btn">
           Sign In
         </button>
       </nav>
@@ -98,19 +95,19 @@ export default function SignInForm(props) {
         <div className="modal-window active">
           {switcher ? (
             <SignIn
-              switch={signSwitcher}
+              switch={toggleSignForm}
               error={error}
               login={logIn}
-              close={isModalShow}
+              close={handlerModalWindow}
             />
           ) : (
             <SignUp
               err={errorHandler}
               confirm={confrim}
               add={addUserToBase}
-              close={isModalShow}
+              close={handlerModalWindow}
               error={error}
-              switch={signSwitcher}
+              switch={toggleSignForm}
             />
           )}
         </div>
